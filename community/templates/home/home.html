@@ -1,0 +1,152 @@
+{% extends 'home/base.html' %}
+
+{% block title %}Discover Local Events - EventBoard{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="flex flex-col lg:flex-row gap-8">
+
+        <aside
+            class="w-full lg:w-64 shrink-0 lg:sticky lg:top-24 h-fit bg-white p-6 rounded-2xl border border-gray-200 shadow-xs">
+            <h2 class="text-lg font-bold text-gray-900 mb-6">Filter Events</h2>
+
+            <div class="mb-6">
+                <span class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-3">Categories</span>
+                <div class="space-y-2">
+                    <label class="flex items-center text-sm font-medium text-gray-700 cursor-pointer">
+                        <input type="checkbox"
+                            class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3" checked>
+                        All Categories
+                    </label>
+                    <label
+                        class="flex items-center text-sm font-medium text-gray-600 hover:text-gray-900 cursor-pointer">
+                        <input type="checkbox"
+                            class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        Tech Meetups
+                    </label>
+                    <label
+                        class="flex items-center text-sm font-medium text-gray-600 hover:text-gray-900 cursor-pointer">
+                        <input type="checkbox"
+                            class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        Sports Games
+                    </label>
+                    <label
+                        class="flex items-center text-sm font-medium text-gray-600 hover:text-gray-900 cursor-pointer">
+                        <input type="checkbox"
+                            class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
+                        Education
+                    </label>
+                </div>
+            </div>
+
+            <hr class="border-gray-100 my-4">
+
+            <div>
+                <span class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-3">Timeframe</span>
+                <div class="space-y-2">
+                    <label class="flex items-center text-sm font-medium text-gray-700 cursor-pointer">
+                        <input type="radio" name="date_filter" class="text-indigo-600 focus:ring-indigo-500 mr-3"
+                            checked>
+                        Anytime
+                    </label>
+                    <label
+                        class="flex items-center text-sm font-medium text-gray-600 hover:text-gray-900 cursor-pointer">
+                        <input type="radio" name="date_filter" class="text-indigo-600 focus:ring-indigo-500 mr-3">
+                        Today
+                    </label>
+                    <label
+                        class="flex items-center text-sm font-medium text-gray-600 hover:text-gray-900 cursor-pointer">
+                        <input type="radio" name="date_filter" class="text-indigo-600 focus:ring-indigo-500 mr-3">
+                        This Week
+                    </label>
+                </div>
+            </div>
+        </aside>
+
+        <section class="flex-grow">
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-2xl font-extrabold text-gray-900 tracking-tight">Upcoming Events</h1>
+                <span class="text-sm text-gray-500 font-medium">Showing 2 community events</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+
+                <div
+                    class="bg-white rounded-2xl border border-gray-200 overflow-hidden flex flex-col hover:shadow-md hover:border-gray-300 transition duration-200">
+                    <div class="p-6 flex-grow">
+                        <div class="flex justify-between items-center mb-4">
+                            <span
+                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-700">
+                                Tech</span>
+                            <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md">8
+                                Attending</span>
+                        </div>
+
+                        <h3 class="text-lg font-bold text-gray-900 leading-snug mb-2 hover:text-indigo-600 transition">
+                            <a href="#">Django & Python Code Study Session</a>
+                        </h3>
+                        <p class="text-gray-500 text-sm line-clamp-3 mb-4">Let's get together at the downtown hub to
+                            build out project portfolios, handle database migrations, and practice technical interview
+                            questions.</p>
+
+                        <div class="space-y-2 text-xs font-medium text-gray-600 pt-2 border-t border-gray-50">
+                            <div class="flex items-center gap-2"><span>⏱️</span> <span>Saturday, July 11 · 2:00
+                                    PM</span></div>
+                            <div class="flex items-center gap-2"><span>📍</span> <span class="truncate">Downtown
+                                    Innovation Hub</span></div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 px-6 py-4 border-t border-gray-100 flex justify-between items-center">
+                        <a href="#"
+                            class="inline-flex justify-center items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg shadow-xs transition cursor-pointer">
+                            Join Event
+                        </a>
+                        <a href="#"
+                            class="text-xs font-bold text-gray-500 hover:text-indigo-600 flex items-center gap-1">Details
+                            <span>→</span></a>
+                    </div>
+                </div>
+
+                <div
+                    class="bg-white rounded-2xl border border-gray-200 overflow-hidden flex flex-col hover:shadow-md hover:border-gray-300 transition duration-200">
+                    <div class="p-6 flex-grow">
+                        <div class="flex justify-between items-center mb-4">
+                            <span
+                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700">
+                                Sports</span>
+                            <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md">14
+                                Attending</span>
+                        </div>
+
+                        <h3 class="text-lg font-bold text-gray-900 leading-snug mb-2 hover:text-indigo-600 transition">
+                            <a href="#">Casual Weekend Soccer Match</a>
+                        </h3>
+                        <p class="text-gray-500 text-sm line-clamp-3 mb-4">Friendly 7v7 scrimmage match at the municipal
+                            park. All skill levels welcome! Please bring running shoes/cleats and extra water.</p>
+
+                        <div class="space-y-2 text-xs font-medium text-gray-600 pt-2 border-t border-gray-50">
+                            <div class="flex items-center gap-2"><span>⏱️</span> <span>Sunday, July 12 · 9:00 AM</span>
+                            </div>
+                            <div class="flex items-center gap-2"><span>📍</span> <span class="truncate">Community Center
+                                    Pitch</span></div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 px-6 py-4 border-t border-gray-100 flex justify-between items-center">
+                        <a href="#"
+                            class="inline-flex justify-center items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg shadow-xs transition cursor-pointer">
+                            Join Event
+                        </a>
+                        <a href="#"
+                            class="text-xs font-bold text-gray-500 hover:text-indigo-600 flex items-center gap-1">Details
+                            <span>→</span></a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+</div>
+{% endblock %}
