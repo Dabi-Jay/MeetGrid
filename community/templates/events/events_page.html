@@ -84,9 +84,9 @@
                                 {{ event.get_category_display }}
                             </span>
                             <!-- <span class="text-xs font-medium text-gray-500">By {{ event.created_by.username }}</span> -->
-                            <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md">
+                            <!-- <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md">
                                 {{ event.attendees.count }} Attending
-                            </span>
+                            </span> -->
                         </div>
 
                         <h3 class="text-lg font-bold text-gray-900 leading-snug mb-2 transition">
@@ -111,7 +111,7 @@
                             class="inline-flex justify-center items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg shadow-xs transition cursor-pointer">
                             Join Event
                         </a>
-                        <a href="#"
+                        <a href="{% url 'event_detail' event.id %}"
                             class="text-xs font-bold text-gray-500 hover:text-indigo-600 flex items-center gap-1">
                             Details <span>→</span>
                         </a>

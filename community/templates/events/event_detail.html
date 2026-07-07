@@ -1,0 +1,81 @@
+{% extends 'home/base.html' %}
+
+{% block title %}{{ event.title }} - MeetGrid{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 py-10">
+
+    <a href="{% url 'events_page' %}"
+        class="inline-flex items-center text-sm font-semibold text-gray-500 hover:text-indigo-600 mb-6 transition">
+        ← Back to all events
+    </a>
+
+    <div class="bg-white border border-gray-200 rounded-3xl p-8 shadow-xs">
+
+        <div class="flex flex-wrap justify-between items-start gap-4 pb-6 border-b border-gray-100">
+            <div class="space-y-2 max-w-2xl">
+                <span
+                    class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700">
+                    {{ event.get_category_display }}
+                </span>
+                <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight leading-snug">
+                    {{ event.title }}
+                </h1>
+                <p class="text-sm text-gray-500 font-medium">
+                    Organized by <span class="text-gray-900 font-semibold">@{{ event.created_by.username }}</span>
+                </p>
+            </div>
+
+            <div class="bg-emerald-50 border border-emerald-100 px-4 py-2 rounded-xl text-center min-w-[120px]">
+                <span class="block text-2xl font-black text-emerald-700 leading-none">
+                    {{ event.attendees.count }}
+                </span>
+                <span class="text-[11px] font-bold text-emerald-600 uppercase tracking-wider mt-1 block">
+                    Attending
+                </span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+
+            <div class="md:col-span-2 space-y-4">
+                <h3 class="text-lg font-bold text-gray-900">About this Event</h3>
+                <p class="text-gray-600 text-base leading-relaxed whitespace-pre-line">
+                    {{ event.description }}
+                </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-5 border border-gray-100 h-fit space-y-4">
+                <h3 class="text-sm font-bold text-gray-900 uppercase tracking-wider text-gray-400">Logistics</h3>
+
+                <div class="space-y-3 text-sm text-gray-700 font-medium">
+                    <div class="flex items-start gap-3">
+                        <span class="text-lg leading-none">⏱️</span>
+                        <div>
+                            <p class="text-gray-900 font-semibold">{{ event.date|date:"l, F j, Y" }}</p>
+                            <p class="text-gray-500 text-xs mt-0.5">{{ event.time|time:"g:i A" }}</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-3 pt-2 border-t border-gray-200/60">
+                        <span class="text-lg leading-none">📍</span>
+                        <div>
+                            <p class="text-gray-900 font-semibold">Location / Venue</p>
+                            <p class="text-gray-500 text-xs mt-0.5 leading-normal">{{ event.location }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-gray-200/60">
+                    <a href="#"
+                        class="w-full inline-flex justify-center items-center px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-xl shadow-xs transition duration-150 cursor-pointer">
+                        Join this Event
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+{% endblock %}
