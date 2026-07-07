@@ -1,0 +1,92 @@
+{% extends 'home/base.html' %}
+
+{% block title %}Post a New Event - MeetGrid{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto px-4 py-12">
+    <div class="bg-white p-8 border border-gray-200 rounded-2xl shadow-xs">
+
+        <div class="mb-8">
+            <h1 class="text-2xl font-extrabold text-gray-900 tracking-tight">Share an Event</h1>
+            <p class="text-sm text-gray-500 mt-1">Get the word out to your neighborhood community.</p>
+        </div>
+
+        <form method="POST" class="space-y-6">
+            {% csrf_token %}
+
+            <div>
+                <label for="{{ form.title.id_for_label }}" class="block text-sm font-medium text-gray-700">Event
+                    Title</label>
+                <div class="mt-1">
+                    <input type="text" id="{{ form.title.id_for_label }}" name="{{ form.title.html_name }}" required
+                        class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                </div>
+            </div>
+
+            <div>
+                <label for="{{ form.description.id_for_label }}"
+                    class="block text-sm font-medium text-gray-700">Description</label>
+                <div class="mt-1">
+                    <textarea id="{{ form.description.id_for_label }}" name="{{ form.description.html_name }}" rows="4"
+                        required
+                        class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
+                </div>
+            </div>
+
+            <div>
+                <label for="{{ form.location.id_for_label }}" class="block text-sm font-medium text-gray-700">Location /
+                    Venue</label>
+                <div class="mt-1">
+                    <input type="text" id="{{ form.location.id_for_label }}" name="{{ form.location.html_name }}"
+                        placeholder="e.g. Community Center or Zoom Link" required
+                        class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label for="{{ form.date.id_for_label }}"
+                        class="block text-sm font-medium text-gray-700">Date</label>
+                    <div class="mt-1">
+                        <input type="date" id="{{ form.date.id_for_label }}" name="{{ form.date.html_name }}" required
+                            class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
+                </div>
+                <div>
+                    <label for="{{ form.time.id_for_label }}" class="block text-sm font-medium text-gray-700">Start
+                        Time</label>
+                    <div class="mt-1">
+                        <input type="time" id="{{ form.time.id_for_label }}" name="{{ form.time.html_name }}" required
+                            class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <label for="{{ form.category.id_for_label }}"
+                    class="block text-sm font-medium text-gray-700">Category</label>
+                <div class="mt-1">
+                    <select id="{{ form.category.id_for_label }}" name="{{ form.category.html_name }}" required
+                        class="block w-full px-3 py-2 border border-gray-300 bg-white rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        {% for value, text in form.category.field.choices %}
+                        <option value="{{ value }}">{{ text }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-3 pt-4 border-t border-gray-100">
+                <a href="{% url 'events_page' %}"
+                    class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-semibold text-gray-700 bg-white hover:bg-gray-50 transition">
+                    Cancel
+                </a>
+                <button type="submit"
+                    class="px-4 py-2 border border-transparent rounded-lg text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 transition">
+                    Publish Event
+                </button>
+            </div>
+        </form>
+
+    </div>
+</div>
+{% endblock %}

@@ -1,130 +1,27 @@
 {% extends 'home/base.html' %}
 
-{% block title %}Discover Local Events - EventBoard{% endblock %}
+{% block title %}Welcome to MeetGrid{% endblock %}
 
 {% block content %}
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <div class="flex flex-col lg:flex-row gap-8">
+<div class="min-h-[80vh] flex flex-col items-center justify-center text-center px-6">
+    <div class="max-w-3xl space-y-4">
+        <h1 class="text-5xl font-extrabold text-gray-900 tracking-tight">
+            Welcome to <span class="text-indigo-600">MeetGrid</span>
+        </h1>
+        <p class="text-lg text-gray-500 max-w-2xl mx-auto">
+            Discover upcoming local workshops, community gatherings, and events happening around you.
+        </p>
+    </div>
 
-        <aside
-            class="w-full lg:w-64 shrink-0 lg:sticky lg:top-24 h-fit bg-white p-6 rounded-2xl border border-gray-200 shadow-xs">
-            <h2 class="text-lg font-bold text-gray-900 mb-6">Filter Events</h2>
-
-            <div class="mb-6">
-                <span class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-3">Categories</span>
-                <div class="space-y-2">
-                    <label class="flex items-center text-sm font-medium text-gray-700 cursor-pointer">
-                        <input type="checkbox"
-                            class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3" checked>
-                        All Categories
-                    </label>
-                    <label
-                        class="flex items-center text-sm font-medium text-gray-600 hover:text-gray-900 cursor-pointer">
-                        <input type="checkbox"
-                            class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
-                        Tech Meetups
-                    </label>
-                    <label
-                        class="flex items-center text-sm font-medium text-gray-600 hover:text-gray-900 cursor-pointer">
-                        <input type="checkbox"
-                            class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
-                        Sports Games
-                    </label>
-                    <label
-                        class="flex items-center text-sm font-medium text-gray-600 hover:text-gray-900 cursor-pointer">
-                        <input type="checkbox"
-                            class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 mr-3">
-                        Education
-                    </label>
-                </div>
-            </div>
-
-            <hr class="border-gray-100 my-4">
-
-            <div>
-                <span class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-3">Timeframe</span>
-                <div class="space-y-2">
-                    <label class="flex items-center text-sm font-medium text-gray-700 cursor-pointer">
-                        <input type="radio" name="date_filter" class="text-indigo-600 focus:ring-indigo-500 mr-3"
-                            checked>
-                        Anytime
-                    </label>
-                    <label
-                        class="flex items-center text-sm font-medium text-gray-600 hover:text-gray-900 cursor-pointer">
-                        <input type="radio" name="date_filter" class="text-indigo-600 focus:ring-indigo-500 mr-3">
-                        Today
-                    </label>
-                    <label
-                        class="flex items-center text-sm font-medium text-gray-600 hover:text-gray-900 cursor-pointer">
-                        <input type="radio" name="date_filter" class="text-indigo-600 focus:ring-indigo-500 mr-3">
-                        This Week
-                    </label>
-                </div>
-            </div>
-        </aside>
-
-        <section class="flex-grow">
-            <div class="flex justify-between items-center mb-6">
-                <h1 class="text-2xl font-extrabold text-gray-900 tracking-tight">Upcoming Events</h1>
-                <span class="text-sm text-gray-500 font-medium">Showing {{ event_count }} community events</span>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-
-                {% for event in events %}
-                <div
-                    class="bg-white rounded-2xl border border-gray-200 overflow-hidden flex flex-col hover:shadow-md hover:border-gray-300 transition duration-200">
-                    <div class="p-6 flex-grow">
-                        <div class="flex justify-between items-center mb-4">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold 
-                                {% if event.category == 'TECH' %}bg-blue-50 text-blue-700
-                                {% elif event.category == 'SPORT' %}bg-emerald-50 text-emerald-700
-                                {% elif event.category == 'EDU' %}bg-purple-50 text-purple-700
-                                {% else %}bg-amber-50 text-amber-700{% endif %}">
-                                {{ event.get_category_display }}
-                            </span>
-                            <!-- <span class="text-xs font-medium text-gray-500">By {{ event.created_by.username }}</span> -->
-                            <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md">
-                                {{ event.attendees.count }} Attending
-                            </span>
-                        </div>
-
-                        <h3 class="text-lg font-bold text-gray-900 leading-snug mb-2 transition">
-                            {{ event.title }}
-                        </h3>
-                        <p class="text-gray-500 text-sm line-clamp-3 mb-4">{{ event.description }}</p>
-
-                        <div class="space-y-2 text-xs font-medium text-gray-600 pt-2 border-t border-gray-50">
-                            <div class="flex items-center gap-2">
-                                <span>⏱️</span>
-                                <span>{{ event.date|date:"l, F j" }} · {{ event.time|time:"g:i A" }}</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <span>📍</span>
-                                <span class="truncate">{{ event.location }}</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-gray-50 px-6 py-4 border-t border-gray-100 flex justify-between items-center">
-                        <a href="#"
-                            class="inline-flex justify-center items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg shadow-xs transition cursor-pointer">
-                            Join Event
-                        </a>
-                        <a href="#"
-                            class="text-xs font-bold text-gray-500 hover:text-indigo-600 flex items-center gap-1">
-                            Details <span>→</span>
-                        </a>
-                    </div>
-                </div>
-                {% empty %}
-                <div class="col-span-full py-12 text-center text-gray-500">
-                    <p class="text-lg font-semibold">No community events scheduled yet.</p>
-                </div>
-                {% endfor %}
-            </div>
-        </section>
-
+    <div class="mt-10 flex gap-4">
+        <a href="{% url 'create_event' %}"
+            class="px-6 py-3 font-semibold rounded-xl text-white bg-indigo-600 hover:bg-indigo-700 shadow-md transition">
+            Create Event
+        </a>
+        <a href="{% url 'events_page' %}"
+            class="px-6 py-3 font-semibold rounded-xl text-gray-700 bg-white border border-gray-200 hover:bg-gray-50 shadow-sm transition">
+            Browse Events
+        </a>
     </div>
 </div>
 {% endblock %}
