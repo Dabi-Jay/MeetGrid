@@ -1,6 +1,6 @@
 {% extends 'home/base.html' %}
 
-{% block title %}Sign In - MeetGrid{% endblock %}
+{% block title %}Sign In{% endblock %}
 
 {% block content %}
 <div class="min-h-[70vh] flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -48,7 +48,7 @@
 
             <div class="mt-6 text-center text-sm">
                 <span class="text-gray-600">Don't have an account?</span>
-                <a href="" class="font-semibold text-indigo-600 hover:text-indigo-500 ml-1">Sign
+                <a href="{% url 'register' %}" class="font-semibold text-indigo-600 hover:text-indigo-500 ml-1">Sign
                     up</a>
             </div>
 
