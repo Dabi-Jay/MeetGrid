@@ -44,6 +44,18 @@ def event_detail_view(request, event_id):
     return render(request, 'events/event_detail.html', context)
 
 
+@login_required
+def toggle_join_view(request, event_id):
+    event = get_object_or_404(Event, id=event_id)
+    
+    if request.user in event.attendees.all():
+        event.attendees.remove(request.user)
+    else:
+        event.attendees.add(request.user)
+        
+    return redirect(request.META.get('HTTP_REFERER', 'event_detail'))
+
+
 def register_view(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)

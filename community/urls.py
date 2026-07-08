@@ -11,4 +11,5 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),
     path('register/', views.register_view, name='register'),
     path('events/<int:event_id>/', views.event_detail_view, name='event_detail'),
+    path('events/<int:event_id>/toggle-join/', views.toggle_join_view, name='toggle_join'),
 ]

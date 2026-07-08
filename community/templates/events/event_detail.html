@@ -67,10 +67,24 @@
                 </div>
 
                 <div class="pt-4 border-t border-gray-200/60">
-                    <a href="#"
+                    {% if user.is_authenticated %}
+                    {% if user in event.attendees.all %}
+                    <a href="{% url 'toggle_join' event.id %}"
+                        class="w-full inline-flex justify-center items-center px-4 py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-sm font-semibold rounded-xl transition duration-150 cursor-pointer">
+                        Leave this Event
+                    </a>
+                    {% else %}
+                    <a href="{% url 'toggle_join' event.id %}"
                         class="w-full inline-flex justify-center items-center px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-xl shadow-xs transition duration-150 cursor-pointer">
                         Join this Event
                     </a>
+                    {% endif %}
+                    {% else %}
+                    <a href="{% url 'login' %}?next={{ request.path }}"
+                        class="w-full inline-flex justify-center items-center px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-semibold rounded-xl transition duration-150 cursor-pointer">
+                        Sign in to Join Event
+                    </a>
+                    {% endif %}
                 </div>
             </div>
 
