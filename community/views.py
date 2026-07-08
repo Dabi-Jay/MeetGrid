@@ -4,6 +4,8 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from .forms import EventForm
+from django.http import HttpResponseForbidden
+from django.urls import reverse
 
 
 def home_view(request):
@@ -86,3 +88,26 @@ def profile_view(request):
         'event_count': events.count()
     }
     return render(request, 'registration/profile.html', context)
+
+
+@login_required
+def edit_event_view(request, event_id):
+    event = get_object_or_404(Event, id=event_id)
+    
+    if event.created_by != request.user:
+        return HttpResponseForbidden("You do not have permission to edit this event.")
+        
+    if request.method == 'POST':
+        form = EventForm(request.POST, instance=event)
+        if form.is_valid():
+            
+            return redirect(f"{reverse('profile')}?tab=hosting")
+    else:
+        form = EventForm(instance=event)
+        
+    context = {
+        'form': form,
+        'event': event,
+        'is_edit': True 
+    }
+    return render(request, 'events/create_event.html', context)
