@@ -67,3 +67,22 @@ def register_view(request):
         form = UserCreationForm()
 
     return render(request, "registration/register.html", {"form": form})
+
+@login_required
+def profile_view(request):
+    active_tab = request.GET.get('tab', 'attending')
+    
+    if active_tab == 'hosting':
+        events = Event.objects.filter(created_by=request.user)
+        tab_title = "Hosted Events"
+    else:
+        events = Event.objects.filter(attendees=request.user)
+        tab_title = "Attending Events"
+        
+    context = {
+        'events': events,
+        'active_tab': active_tab,
+        'tab_title': tab_title,
+        'event_count': events.count()
+    }
+    return render(request, 'registration/profile.html', context)
