@@ -14,4 +14,5 @@ urlpatterns = [
     path('events/<int:event_id>/toggle-join/', views.toggle_join_view, name='toggle_join'),
     path('profile/', views.profile_view, name='profile'),
     path('events/<int:event_id>/edit/', views.edit_event_view, name='edit_event'),
+    path('events/<int:event_id>/delete/', views.delete_event_view, name='delete_event'),
 ]

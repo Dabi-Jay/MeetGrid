@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import EventForm
 from django.http import HttpResponseForbidden
 from django.urls import reverse
+from django.views.decorators.http import require_POST
 
 
 def home_view(request):
@@ -111,3 +112,15 @@ def edit_event_view(request, event_id):
         'is_edit': True 
     }
     return render(request, 'events/create_event.html', context)
+
+
+@login_required
+def delete_event_view(request, event_id):
+    event = get_object_or_404(Event, id=event_id)
+    
+    if event.created_by != request.user:
+        return HttpResponseForbidden("You do not have permission to delete this event.")
+        
+    event.delete()
+    
+    return redirect(f"{reverse('profile')}?tab=hosting")
