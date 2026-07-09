@@ -47,22 +47,50 @@
                 </div>
             </div>
 
-            <div class="bg-gray-50 px-5 py-3 border-t border-gray-100 flex justify-end items-center gap-3">
+            <div class="bg-gray-50 px-5 py-3 border-t border-gray-100 flex justify-between items-center">
 
-                <a href="{% url 'edit_event' event.id %}"
-                    class="text-xs font-bold text-amber-600 hover:text-amber-700 bg-amber-50 px-3 py-1.5 rounded-lg border border-amber-200 transition">
-                    Edit
-                </a>
-
-                <form action="{% url 'delete_event' event.id %}" method="POST" class="inline"
-                    onsubmit="return confirm('Are you sure you want to permanently delete this event? This cannot be undone.');">
-                    {% csrf_token %}
-                    <button type="submit"
+                <div>
+                    {% if active_tab == 'hosting' %}
+                    <span class="text-xs font-semibold text-gray-500">Event Manager</span>
+                    {% else %}
+                    {% if request.user in event.attendees.all %}
+                    <a href="{% url 'toggle_join' event.id %}"
                         class="text-xs font-bold text-red-600 hover:text-red-700 bg-red-50 px-3 py-1.5 rounded-lg border border-red-200 transition">
-                        Delete
-                    </button>
-                </form>
+                        Leave
+                    </a>
+                    {% else %}
+                    <a href="{% url 'toggle_join' event.id %}"
+                        class="text-xs font-bold text-indigo-600 hover:text-indigo-700 bg-indigo-50 px-3 py-1.5 rounded-lg border border-indigo-200 transition">
+                        Join
+                    </a>
+                    {% endif %}
+                    {% endif %}
+                </div>
 
+                <div class="flex items-center gap-3">
+
+                    {% if active_tab == 'hosting' %}
+                    <a href="{% url 'edit_event' event.id %}"
+                        class="text-xs font-bold text-amber-600 hover:text-amber-700 bg-amber-50 px-3 py-1.5 rounded-lg border border-amber-200 transition">
+                        Edit
+                    </a>
+
+                    <form action="{% url 'delete_event' event.id %}" method="POST" class="inline"
+                        onsubmit="return confirm('Are you sure you want to permanently delete this event?');">
+                        {% csrf_token %}
+                        <button type="submit"
+                            class="text-xs font-bold text-red-600 hover:text-red-700 bg-red-50 px-3 py-1.5 rounded-lg border border-red-200 transition">
+                            Delete
+                        </button>
+                    </form>
+                    {% else %}
+                    <a href="{% url 'event_detail' event.id %}"
+                        class="text-xs font-bold text-indigo-600 hover:underline">
+                        View Details →
+                    </a>
+                    {% endif %}
+
+                </div>
             </div>
         </div>
         {% endfor %}
