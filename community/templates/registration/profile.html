@@ -9,8 +9,7 @@
         <h1 class="text-2xl font-black text-gray-900 tracking-tight">
             Dashboard
         </h1>
-        <p class="text-sm text-gray-500 mt-1">Manage and track all your community connections in one place.
-        </p>
+        <p class="text-sm text-gray-500 mt-1">Manage and track all your community connections in one place.</p>
     </div>
 
     <div class="flex border-b border-gray-200 mb-8 gap-6">
@@ -48,34 +47,18 @@
             </div>
 
             <div class="bg-gray-50 px-5 py-3 border-t border-gray-100 flex justify-between items-center">
-
+                {% if active_tab == 'hosting' %}
                 <div>
-                    {% if active_tab == 'hosting' %}
                     <span class="text-xs font-semibold text-gray-500">Event Manager</span>
-                    {% else %}
-                    {% if request.user in event.attendees.all %}
-                    <a href="{% url 'toggle_join' event.id %}"
-                        class="text-xs font-bold text-red-600 hover:text-red-700 bg-red-50 px-3 py-1.5 rounded-lg border border-red-200 transition">
-                        Leave
-                    </a>
-                    {% else %}
-                    <a href="{% url 'toggle_join' event.id %}"
-                        class="text-xs font-bold text-indigo-600 hover:text-indigo-700 bg-indigo-50 px-3 py-1.5 rounded-lg border border-indigo-200 transition">
-                        Join
-                    </a>
-                    {% endif %}
-                    {% endif %}
                 </div>
 
                 <div class="flex items-center gap-3">
-
-                    {% if active_tab == 'hosting' %}
-                    <a href="{% url 'edit_event' event.id %}"
+                    <a href="{% url 'edit_event' event_id=event.id %}"
                         class="text-xs font-bold text-amber-600 hover:text-amber-700 bg-amber-50 px-3 py-1.5 rounded-lg border border-amber-200 transition">
                         Edit
                     </a>
 
-                    <form action="{% url 'delete_event' event.id %}" method="POST" class="inline"
+                    <form action="{% url 'delete_event' event_id=event.id %}" method="POST" class="inline"
                         onsubmit="return confirm('Are you sure you want to permanently delete this event?');">
                         {% csrf_token %}
                         <button type="submit"
@@ -83,14 +66,25 @@
                             Delete
                         </button>
                     </form>
-                    {% else %}
-                    <a href="{% url 'event_detail' event.id %}"
-                        class="text-xs font-bold text-indigo-600 hover:underline">
-                        View Details →
-                    </a>
-                    {% endif %}
-
                 </div>
+                {% else %}
+                {% if request.user in event.attendees.all %}
+                <a href="{% url 'toggle_join' event_id=event.id %}?next={{ request.get_full_path|urlencode }}"
+                    class="text-xs font-bold text-red-600 hover:text-red-700 bg-white hover:bg-red-50 px-4 py-2 rounded-lg border border-gray-200 hover:border-red-200 transition">
+                    Leave
+                </a>
+                {% else %}
+                <a href="{% url 'toggle_join' event_id=event.id %}?next={{ request.get_full_path|urlencode }}"
+                    class="text-xs font-bold text-indigo-600 hover:text-white bg-indigo-50 hover:bg-indigo-600 px-4 py-2 rounded-lg border border-indigo-200 transition">
+                    Join
+                </a>
+                {% endif %}
+
+                <a href="{% url 'event_detail' event_id=event.id %}"
+                    class="text-xs font-bold text-gray-500 hover:text-indigo-600 flex items-center gap-1">
+                    View Details <span>→</span>
+                </a>
+                {% endif %}
             </div>
         </div>
         {% endfor %}

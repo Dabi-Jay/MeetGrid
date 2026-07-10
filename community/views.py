@@ -7,6 +7,9 @@ from .forms import EventForm
 from django.http import HttpResponseForbidden
 from django.urls import reverse
 from django.views.decorators.http import require_POST
+from django.db.models import Q
+from django.utils import timezone
+from datetime import timedelta
 
 
 def home_view(request):
@@ -14,14 +17,36 @@ def home_view(request):
 
 
 def events_view(request):
-    events = Event.objects.all()
+    events = Event.objects.all().order_by('date')
     
-    context = {
-        "events": events,
-        "event_count": events.count()
-    }
-    return render(request, 'events/events_page.html', context) 
+    search_query = request.GET.get('search', '').strip()
+    selected_category = request.GET.get('category', '').strip()
+    selected_timeframe = request.GET.get('timeframe', 'anytime').strip()
 
+    if search_query:
+        events = events.filter(
+            Q(title__icontains=search_query) | 
+            Q(location__icontains=search_query)
+        )
+
+    if selected_category and selected_category != 'all':
+        events = events.filter(category=selected_category)
+
+    today = timezone.now().date()
+    if selected_timeframe == 'today':
+        events = events.filter(date=today)
+    elif selected_timeframe == 'this_week':
+        next_week = today + timedelta(days=7)
+        events = events.filter(date__range=[today, next_week])
+
+    context = {
+        'events': events,
+        'search_query': search_query,
+        'selected_category': selected_category,
+        'selected_timeframe': selected_timeframe,
+        'event_count': events.count(),
+    }
+    return render(request, 'events/events_page.html', context)
 
 @login_required
 def create_event_view(request):
