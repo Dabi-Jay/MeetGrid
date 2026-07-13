@@ -51,10 +51,69 @@
     </nav>
     {% endif %}
 
+    {% if messages %}
+    <div class="fixed top-24 left-1/2 -translate-x-1/2 z-100 w-full max-w-md px-4 pointer-events-none transition-all duration-300"
+        id="django-toast-container">
+        {% for message in messages %}
+        <div class="pointer-events-auto relative p-4 pr-10 rounded-xl border flex items-start gap-3 text-sm font-semibold shadow-xl transition-all duration-300 transform scale-100 opacity-100
+            {% if message.tags == 'success' %}bg-white text-emerald-900 border-emerald-100 shadow-emerald-100/40
+            {% elif message.tags == 'error' %}bg-white text-red-900 border-red-100 shadow-red-100/40
+            {% else %}bg-white text-blue-900 border-blue-100 shadow-blue-100/40{% endif %}" id="django-toast">
+
+            <div class="shrink-0 mt-0.5">
+                {% if message.tags == 'success' %}
+                <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" stroke-width="2.5"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                {% else %}
+                <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" stroke-width="2.5"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                {% endif %}
+            </div>
+
+            <div class="flex-1 leading-snug">
+                {{ message }}
+            </div>
+
+            <button onclick="dismissToast()"
+                class="absolute top-3.5 right-3 text-gray-400 hover:text-gray-600 transition rounded-md focus:outline-hidden cursor-pointer p-0.5 hover:bg-gray-50">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
     <main class="flex-grow">
         {% block content %}
         {% endblock %}
     </main>
+
+
+    <script>
+        function dismissToast() {
+            const container = document.getElementById('django-toast-container');
+            if (container) {
+                container.style.opacity = '0';
+                container.style.transform = 'translate(-50%, -10px) scale(0.95)';
+                setTimeout(() => container.remove(), 300);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('django-toast-container');
+            if (container) {
+                setTimeout(dismissToast, 4000);
+            }
+        });
+    </script>
 
 </body>
 

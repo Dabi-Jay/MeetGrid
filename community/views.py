@@ -10,6 +10,7 @@ from django.views.decorators.http import require_POST
 from django.db.models import Q
 from django.utils import timezone
 from datetime import timedelta
+from django.contrib import messages
 
 
 def home_view(request):
@@ -56,6 +57,7 @@ def create_event_view(request):
             event = form.save(commit=False)
             event.created_by = request.user 
             event.save()
+            messages.success(request, f"Event '{event.title}' has been successfully created!")
             return redirect("events_page") 
     else:
         form = EventForm()
@@ -78,8 +80,10 @@ def toggle_join_view(request, event_id):
     
     if request.user in event.attendees.all():
         event.attendees.remove(request.user)
+        messages.success(request, f"You have left the event: '{event.title}'.")
     else:
         event.attendees.add(request.user)
+        messages.success(request, f"Success! You are now registered for '{event.title}'.")
         
     return redirect(request.META.get('HTTP_REFERER', 'event_detail'))
 
@@ -90,6 +94,7 @@ def register_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
+            messages.success(request, f"Welcome to MeetGrid, {user.username}! Your account was created successfully.")
             return redirect("events_page") 
     else:
         form = UserCreationForm()
@@ -121,11 +126,14 @@ def edit_event_view(request, event_id):
     event = get_object_or_404(Event, id=event_id)
     
     if event.created_by != request.user:
+        messages.error(request, "You do not have permission to edit this event.")
         return HttpResponseForbidden("You do not have permission to edit this event.")
         
     if request.method == 'POST':
         form = EventForm(request.POST, instance=event)
         if form.is_valid():
+            form.save()
+            messages.success(request, f"Changes to '{event.title}' have been saved.")
             
             return redirect(f"{reverse('profile')}?tab=hosting")
     else:
@@ -144,8 +152,10 @@ def delete_event_view(request, event_id):
     event = get_object_or_404(Event, id=event_id)
     
     if event.created_by != request.user:
+        messages.error(request, "You do not have permission to delete this event.")
         return HttpResponseForbidden("You do not have permission to delete this event.")
         
     event.delete()
+    messages.success(request, f"The event '{event.title}' was permanently deleted.")
     
     return redirect(f"{reverse('profile')}?tab=hosting")
