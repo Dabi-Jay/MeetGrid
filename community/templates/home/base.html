@@ -17,11 +17,13 @@
             MeetGrid
         </a>
 
+        {% if request.resolver_match.url_name == 'events_page' %}
         <form action="{% url 'events_page' %}" method="GET" class="hidden sm:block w-96">
             <input type="text" name="search" value="{{ search_query|default:'' }}"
                 placeholder="Search events by title or location..."
                 class="w-full px-4 py-1.5 bg-gray-100 border border-transparent rounded-lg focus:bg-white focus:border-indigo-500 outline-none text-sm transition">
         </form>
+        {% endif %}
 
         <div class="flex items-center gap-4">
             {% if user.is_authenticated %}
