@@ -50,7 +50,12 @@
 
                 <div class="space-y-3 text-sm text-gray-700 font-medium">
                     <div class="flex items-start gap-3">
-                        <span class="text-lg leading-none">⏱️</span>
+                        <svg class="w-4 h-4 text-gray-400 shrink-0 mt-0.5" fill="none" stroke="currentColor"
+                            stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M6 7h12M6 11h12m-6 4h6M4 5h16a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2z">
+                            </path>
+                        </svg>
                         <div>
                             <p class="text-gray-900 font-semibold">{{ event.date|date:"l, F j, Y" }}</p>
                             <p class="text-gray-500 text-xs mt-0.5">{{ event.time|time:"g:i A" }}</p>
@@ -58,7 +63,14 @@
                     </div>
 
                     <div class="flex items-start gap-3 pt-2 border-t border-gray-200/60">
-                        <span class="text-lg leading-none">📍</span>
+                        <svg class="w-4 h-4 text-gray-400 shrink-0 mt-0.5" fill="none" stroke="currentColor"
+                            stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                            </path>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z">
+                            </path>
+                        </svg>
                         <div>
                             <p class="text-gray-900 font-semibold">Location / Venue</p>
                             <p class="text-gray-500 text-xs mt-0.5 leading-normal">{{ event.location }}</p>
