@@ -1,8 +1,13 @@
 # MeetGrid
 
-MeetGrid is a full-stack community event platform built with Django that enables users to create, discover, manage, and join local events. This project was developed from scratch  with a deliberate emphasis on backend architecture, relational database design, authentication, authorization, and application logic over frontend complexity.
+MeetGrid is a full-stack community event platform built with Django that enables users to create, discover, manage, and join local events. This project was developed from scratch  with a deliberate emphasis on backend architecture, relational database design, authentication, authorization, PostgreSQL deployment, and application logic over frontend complexity.
 
 ---
+## Live Demo
+
+ **[View Live Application](https://meetgrid.onrender.com)**
+
+ ---
 
 # Project Overview
 
