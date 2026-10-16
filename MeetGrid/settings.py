@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 from pathlib import Path
 from decouple import config
 import dj_database_url
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,6 +32,7 @@ ALLOWED_HOSTS = [
     "meetgrid.onrender.com",
     "127.0.0.1",
     "localhost",
+    "meetgrid.jubril.dev"
 ]
 
 
@@ -82,9 +84,14 @@ WSGI_APPLICATION = "MeetGrid.wsgi.application"
 
 DATABASES = {
     "default": dj_database_url.config(
-        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}"
+        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
+        conn_max_age=600,
     )
 }
+
+# Apply SSL options only when connecting to PostgreSQL
+if DATABASES['default']['ENGINE'] == 'django.db.backends.postgresql':
+    DATABASES['default']['OPTIONS'] = {'sslmode': 'require'}
 
 
 # Password validation
@@ -121,7 +128,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 
 LOGIN_REDIRECT_URL = 'home'
 
