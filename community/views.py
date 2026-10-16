@@ -11,10 +11,14 @@ from django.db.models import Q
 from django.utils import timezone
 from datetime import timedelta
 from django.contrib import messages
-
+from django.http import HttpResponse
 
 def home_view(request):
     return render(request, 'home/home.html') 
+
+
+def health_check(request):
+    return HttpResponse("OK", status=200)
 
 
 def events_view(request):
