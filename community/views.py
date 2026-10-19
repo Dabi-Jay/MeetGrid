@@ -13,6 +13,7 @@ from datetime import timedelta
 from django.contrib import messages
 from django.http import HttpResponse
 
+
 def home_view(request):
     return render(request, 'home/home.html') 
 
@@ -81,6 +82,11 @@ def event_detail_view(request, event_id):
 @login_required
 def toggle_join_view(request, event_id):
     event = get_object_or_404(Event, id=event_id)
+
+    # Block users from joining or leaving past events
+    if event.is_past:
+        messages.warning(request, "This event has already ended and can no longer be modified.")
+        return redirect(request.META.get('HTTP_REFERER', 'events_page'))
     
     if request.user in event.attendees.all():
         event.attendees.remove(request.user)
@@ -132,6 +138,10 @@ def edit_event_view(request, event_id):
     if event.created_by != request.user:
         messages.error(request, "You do not have permission to edit this event.")
         return HttpResponseForbidden("You do not have permission to edit this event.")
+
+    if event.is_past:
+        messages.warning(request, "Past events cannot be edited.")
+        return redirect(f"{reverse('profile')}?tab=hosting")
         
     if request.method == 'POST':
         form = EventForm(request.POST, instance=event)
