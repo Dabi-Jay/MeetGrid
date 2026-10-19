@@ -24,9 +24,16 @@ class Event(models.Model):
     @property
     def is_past(self):
         """Returns True if the event date and time have passed."""
+        # Combine naive date and time into a single object
         event_datetime = datetime.datetime.combine(self.date, self.time)
-        if timezone.is_aware(timezone.now()):
-            event_datetime = timezone.make_aware(event_datetime, timezone.get_current_timezone())
+        
+        # Get the active timezone configured in settings.py
+        current_tz = timezone.get_current_timezone()
+        
+        # Make the event datetime timezone-aware
+        event_datetime = timezone.make_aware(event_datetime, current_tz)
+        
+        # Compare with current timezone-aware time
         return event_datetime < timezone.now()
 
     class Meta:
