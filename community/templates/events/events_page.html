@@ -236,6 +236,55 @@
                 </div>
                 {% endfor %}
             </div>
+            <!-- Pagination Component -->
+            {% if page_obj.has_other_pages %}
+            <div class="mt-10 flex justify-center w-full">
+                <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
+
+                    <!-- Previous Button -->
+                    {% if page_obj.has_previous %}
+                    <a href="?{{ query_string }}&page={{ page_obj.previous_page_number }}"
+                        class="relative inline-flex items-center rounded-l-md px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+                        &larr; Prev
+                    </a>
+                    {% else %}
+                    <span
+                        class="relative inline-flex items-center rounded-l-md px-4 py-2 text-sm font-semibold text-gray-300 ring-1 ring-inset ring-gray-200 cursor-not-allowed">
+                        &larr; Prev
+                    </span>
+                    {% endif %}
+
+                    <!-- Page Numbers -->
+                    {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                    <span
+                        class="relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                        {{ num }}
+                    </span>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %} <a
+                        href="?{{ query_string }}&page={{ num }}"
+                        class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+                        {{ num }}
+                        </a>
+                        {% endif %}
+                        {% endfor %}
+
+                        <!-- Next Button -->
+                        {% if page_obj.has_next %}
+                        <a href="?{{ query_string }}&page={{ page_obj.next_page_number }}"
+                            class="relative inline-flex items-center rounded-r-md px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+                            Next &rarr;
+                        </a>
+                        {% else %}
+                        <span
+                            class="relative inline-flex items-center rounded-r-md px-4 py-2 text-sm font-semibold text-gray-300 ring-1 ring-inset ring-gray-200 cursor-not-allowed">
+                            Next &rarr;
+                        </span>
+                        {% endif %}
+
+                </nav>
+            </div>
+            {% endif %}
         </section>
 
     </div>

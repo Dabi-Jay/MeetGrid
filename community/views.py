@@ -12,6 +12,7 @@ from django.utils import timezone
 from datetime import timedelta
 from django.contrib import messages
 from django.http import HttpResponse
+from django.core.paginator import Paginator
 
 
 def home_view(request):
@@ -45,12 +46,24 @@ def events_view(request):
         next_week = today + timedelta(days=7)
         events = events.filter(date__range=[today, next_week])
 
+    # Pagination Logic
+    paginator = Paginator(events, 6)  # 6 events per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    # Preserve active filters (search, category, timeframe) for pagination links
+    query_params = request.GET.copy()
+    if 'page' in query_params:
+        del query_params['page']
+
     context = {
-        'events': events,
+        'events': page_obj,  # This replaces your standard queryset so the template loop works automatically
+        'page_obj': page_obj, # Used for the pagination controls at the bottom
         'search_query': search_query,
         'selected_category': selected_category,
         'selected_timeframe': selected_timeframe,
-        'event_count': events.count(),
+        'event_count': events.count(), # This still accurately counts total filtered events, not just the page
+        'query_string': query_params.urlencode(), # Passes the clean URL parameters to the template
     }
     return render(request, 'events/events_page.html', context)
 
